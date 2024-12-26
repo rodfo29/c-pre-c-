@@ -1,0 +1,11 @@
+1- Pointer Arithmetic -> Addresses Arithmetic
+
+2- Addition/Substraction is donde in chinks of the size of the data type the pointer is pointing to.
+-int 
+-double
+-char
+
+ex: int*ptr...;
+    ptr=ptr +1; ----> 3000 + 1*sizeof(int) = 3000+1*4=3004
+
+    

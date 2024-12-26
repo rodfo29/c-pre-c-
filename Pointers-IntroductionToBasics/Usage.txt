@@ -1,0 +1,4 @@
+1- Passing by Pointer
+2- "Returning" more than just one thing from a function
+3- Passing Arrays and Strings to functions  
+4- Allocating Unkown Memory at "run time"
