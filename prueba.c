@@ -1,10 +1,12 @@
+// Online C compiler to run C program online
 #include <stdio.h>
 
-int main(){
-    int arr[3]={1,2,3};
-    int n=19;
-    int*ptr_n=&n;
-    printf("%d",*ptr_n);
-    // printf("%ld",sizeof(arr));
+int main() {
+    // Write C code here
+    int a;
+    printf("Ingresar numero: ");
+    scanf("Ingresar numero: %d",&a);
 
+
+    return 0;
 }
