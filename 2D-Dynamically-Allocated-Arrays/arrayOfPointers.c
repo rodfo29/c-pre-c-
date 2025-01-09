@@ -14,6 +14,7 @@
 int main(){
 
 // declaramos la columna principal, y luego reservamos la memoria para las filas.
+// int*array; también podemos hacer de esta manera e igualar al bloque de memoria que reservamos.
 int*array[5];
 for(int i=0;i<5;i++){
     array[i]=(int*)malloc(sizeof(int)*3);

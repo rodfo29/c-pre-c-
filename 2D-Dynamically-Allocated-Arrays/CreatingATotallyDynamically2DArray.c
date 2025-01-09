@@ -11,7 +11,7 @@ int main(){
     printf("Enter number of arrows for this matrix: ");
     scanf("%d",&arrows);
     
-    a=(int**)calloc(arrows,sizeof(int));
+    a=(int**)calloc(arrows,sizeof(int*));
     
     for (int i = 0; i < arrows; i++)
     {   

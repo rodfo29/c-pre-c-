@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build",
+        "type": "shell",
+        "command": "gcc",
+        "args": [
+          "-g", // Genera información de depuración
+          "/home/rodfo29/c/c-pre-c-/ComparingStrings.c", // Ruta del código fuente
+          "-o", // Especifica el ejecutable
+          "/home/rodfo29/c/c-pre-c-/copm"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$gcc"]
+      }
+    ]
+  }
+  

@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      
+      {
+        "name": "Depurar ComparingStrings",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "/home/rodfo29/c/c-pre-c-/copm", // Ruta al ejecutable
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "/home/rodfo29/c/c-pre-c-/", // Directorio de trabajo
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb", // Ruta al depurador GDB
+        "setupCommands": [
+          {
+            "description": "Habilitar impresión de variables en GDB",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "build"
+      }
+    ]
+  }
+  
