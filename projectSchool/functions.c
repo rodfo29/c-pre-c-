@@ -53,8 +53,8 @@ Course*createCourse(){
     fgets(newCourse->name,50,stdin);
     noStepLine(newCourse->name);
     newCourse->averageGrade=0;
-    getchar();
     printf("\nEnter NRC: ");
+    getchar();
     scanf("%d",&(newCourse->nrc));
     getchar();
 
@@ -84,7 +84,7 @@ School*createSchool(){
 
 // Add
 
-Student*createNewStudent(Student*head){
+Student*addNewStudent(Student*head){
     Student*newStudent=createStudent();
     if (head==NULL){
     return newStudent;
@@ -100,7 +100,7 @@ Student*createNewStudent(Student*head){
 
     
 
-Course*createNewCourse(Course*head){
+Course*addNewCourse(Course*head){
     Course*newCourse=createCourse();
     if (head==NULL){
     return newCourse;
@@ -117,7 +117,7 @@ Course*createNewCourse(Course*head){
 
 
 
-School*createNewSchool(School*head){
+School*addNewSchool(School*head){
     School*newSchool=createSchool();
     if (head==NULL){
     return newSchool;
@@ -150,41 +150,28 @@ int averageGrade(Student*head){
 }
 
 //  Takes a student struct and prints its details.
-void studentDetails(Student*head){
-    printf("1)Name : %s  --- Record : %d --- ID : %d \n",head->name,head->record,head->id);
+void studentDetails(Student*head,int*i){
+    printf("%d)Name : %s  --- Record : %d --- ID : %d \n",*(i+1),head->name,head->record,head->id);
+    *(i)=*(i)+1;
 
 }
 
-// Search For student From Courses Menú.
-void searchForStudent(Student*head,int id){
-     if (head==NULL){
-        printf("\n\nCurso sin alumnos...\n\n");
-        return;
-    }
-    while (head!=NULL)
-    {   // Print Student Details.
-        if (head->id==id){
-        studentDetails(head);
-        return;
-        }
-        head=head->next;
-    }
-    printf("\n\nStudent Not Found.... \n\n");
-}
+
 
 
 // Print Student´s details From Course Menú.
-void studentsDetails(Student*head){
+void studentsDetails(Course*headCourse,Student*head){
     if (head==NULL){
        printf("\n\nCurso sin alumnos...\n\n");
         return;
     }
     
-    printf("\n\n======== Students ========\n\n ");
-    
+    printf("\n\n======== %s Students ========\n\n",headCourse->name);
+    int i=0;
     while (head!=NULL){
-        printf("1)Name : %s  --- Record : %d --- ID : %d \n",head->name,head->record,head->id);
+        printf("%d)Name : %s  --- Record : %d --- ID : %d \n",i+1,head->name,head->record,head->id);
         head=head->next;
+        i++;
     }
 }
 
@@ -193,7 +180,24 @@ void courseDetails(Course*course){
     course->averageGrade=averageGrade(course->students);
     printf("Name: %s --- Average Grade : %d --- NRC : %d \n",course->name,course->averageGrade,course->nrc);
     printf("\nStudents: \n");
-    studentsDetails(course->students);
+    studentsDetails(course ,course->students);
+
+
+}
+
+void schoolDetails(School*head){
+    if (head==NULL){
+    printf("\n\nSchool NOT Found...\n\n");
+    return;
+    }
+
+    while (head!=NULL)
+    {
+
+    }
+    
+
+    
 
 
 }
@@ -202,10 +206,8 @@ void courseDetails(Course*course){
 
 
 
-
-
 // Check if a course exists at the school.
-void searchCourse(Course*head,int NRC){
+void CheckCourse(Course*head,int NRC){
     if (head==NULL){
         printf("\n\nSchool without Courses...\n\n");
         return;
@@ -220,9 +222,27 @@ void searchCourse(Course*head,int NRC){
         head=head->next;
     }
     printf("\n\nCourse Not Found....\n\n");
+}
 
 
 
+
+// Search For student From Courses Menú.
+void searchForStudent(Student*head,int id){
+     if (head==NULL){
+        printf("\n\nCurso sin alumnos...\n\n");
+        return;
+    }
+    int i=0;
+    while (head!=NULL)
+    {   // Print Student Details.
+        if (head->id==id){
+        studentDetails(head,&i);
+        return;
+        }
+        head=head->next;
+    }
+    printf("\n\nStudent Not Found.... \n\n");
 }
 
 
@@ -232,5 +252,84 @@ void searchCourse(Course*head,int NRC){
 
 
 
+
+
+
+
+
+void freeStudents(Course*headCourse,Student*head){
+    if (head== NULL){
+        printf("\nCurso : %s Sin Estudiantes....\n\n",headCourse->name);
+        return;
+    }
+    Student*aux=NULL;
+    while (head!=NULL)
+    {
+        aux=head;
+        printf("\nEliminando Estudiante: %s     Addres: %p\n",aux->name,aux);
+        head=head->next;
+        free(aux);
+    }
+}
+
+
+
+
+void freeCourses(School*headSchool,Course*headCourse){
+    if (headCourse== NULL){
+        printf("\nEscuela : %s Sin Cursos...\n\n",headSchool->name);
+        return;
+    }
+
+
+    Course*aux=NULL;
+    
+    while (headCourse!=NULL)
+    {
+        aux=headCourse;
+        printf("\n\n======    Curso: %s ======\n",headCourse->name);
+        headCourse=headCourse->next;
+        freeStudents(aux,aux->students);
+        free(aux); 
+
+
+    }
+    
+
+
+
+
+}
+    
+
+
+
+
+
+
+void freeSchools(School*headSchool){
+    if (headSchool==NULL){
+    printf("\n\nNo hay Escuelas Disponibles..\n\n");
+    return;
+    }
+
+    School*aux=NULL;
+    while (headSchool!=NULL)
+    {   
+        aux=headSchool;
+        printf("\n\n====    Escuela : %s  ====\n\n",aux->name);
+        headSchool=headSchool->next;
+        freeCourses(aux,aux->courses);
+        free(aux);
+    }
+    
+
+
+}
+
+
+
 void FailedStudents();
 void PassedStudents();
+void courseMenu();
+void schoolMenu();
