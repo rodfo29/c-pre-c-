@@ -54,7 +54,6 @@ Course*createCourse(){
     noStepLine(newCourse->name);
     newCourse->averageGrade=0;
     printf("\nEnter NRC: ");
-    getchar();
     scanf("%d",&(newCourse->nrc));
     getchar();
 
@@ -139,12 +138,15 @@ School*addNewSchool(School*head){
 // Calculate the Average Grade.
 int averageGrade(Student*head){
     int cont=0;
+    int studentCount=0;
     while (head!=NULL)
-    {
-        cont++;
+    {   
+        cont+=head->record;
+        studentCount++;
         head=head->next;
     }
-    return cont;
+    int avgGrade= cont/studentCount;
+    return avgGrade;
 
 
 }
@@ -166,7 +168,7 @@ void studentsDetails(Course*headCourse,Student*head){
         return;
     }
     
-    printf("\n\n======== %s Students ========\n\n",headCourse->name);
+    printf("\n\n======== %s STUDENTS ========\n\n",headCourse->name);
     int i=0;
     while (head!=NULL){
         printf("%d)Name : %s  --- Record : %d --- ID : %d \n",i+1,head->name,head->record,head->id);
@@ -176,50 +178,44 @@ void studentsDetails(Course*headCourse,Student*head){
 }
 
 void courseDetails(Course*course){
-    printf("\n\n====  Course  ===\n\n");
+    printf("\n\n===  Course: %s  ===\n\n",course->name);
     course->averageGrade=averageGrade(course->students);
     printf("Name: %s --- Average Grade : %d --- NRC : %d \n",course->name,course->averageGrade,course->nrc);
-    printf("\nStudents: \n");
     studentsDetails(course ,course->students);
 
 
 }
 
-void schoolDetails(School*head){
-    if (head==NULL){
-    printf("\n\nSchool NOT Found...\n\n");
-    return;
-    }
 
-    while (head!=NULL)
-    {
-
-    }
-    
-
-    
-
-
-}
 
 
 
 
 
 // Check if a course exists at the school.
-void CheckCourse(Course*head,int NRC){
-    if (head==NULL){
+void CheckCourse(School*head){
+    if (head->courses==NULL){
         printf("\n\nSchool without Courses...\n\n");
         return;
     }
+    
+    int nrc;
+    printf("\n\nEnter the NRC : ");
+    scanf("%d",&nrc);
+    getchar();
 
-    while (head!=NULL)
-    {
-        if (head->nrc==NRC){
-            courseDetails(head);
+
+    Course*headCourse=head->courses;
+    
+
+    while (headCourse!=NULL)
+    {   
+
+        if (headCourse->nrc==nrc){
+            courseDetails(headCourse);
             return;
         }
-        head=head->next;
+        headCourse=headCourse->next;
     }
     printf("\n\nCourse Not Found....\n\n");
 }
@@ -246,6 +242,22 @@ void searchForStudent(Student*head,int id){
 }
 
 
+
+
+void printOutStudentAllCourses(School*headSchool,Course*headCourse){
+    if (headCourse==NULL){
+        printf("\n\nESCUELA %s SIN CURSOS...\n\n",headSchool->name);
+        return;
+    }
+
+
+    while(headCourse!=NULL)
+    {
+        studentsDetails(headCourse,headCourse->students);
+        headCourse=headCourse->next;
+    
+    }
+}
 
 
 
@@ -317,7 +329,7 @@ void freeSchools(School*headSchool){
     while (headSchool!=NULL)
     {   
         aux=headSchool;
-        printf("\n\n====    Escuela : %s  ====\n\n",aux->name);
+        printf("\n\n====   ELIMINANDO ESCUELA : %s  ====\n",aux->name);
         headSchool=headSchool->next;
         freeCourses(aux,aux->courses);
         free(aux);
@@ -328,8 +340,307 @@ void freeSchools(School*headSchool){
 }
 
 
+// DEBEMOS TENER CUIDADO CON ESTO, YA QUE SI USAMOS ÚNICAMENTE EL PUNTERO DE HEADSCHOOL ESTAMOS MODIFICANDO LA LISTA ORIGINAL.
+void CourseFailedAvgGrade(School*headSchool){
+    if (headSchool->courses==NULL){
+        printf("\n\nEscuela sin CURSOS...\n\n");
+        return;
+    }
+        int avgGrade=0;
+        printf("\n\n=== CURSOS CON PROMEDIO DE REPROBADOS ===\n\n");
+        Course*headCourse=headSchool->courses;
+        while (headCourse!=NULL)
+        {
+            avgGrade=averageGrade(headCourse->students);
+            if (avgGrade<10){
+                courseDetails(headCourse);
 
-void FailedStudents();
-void PassedStudents();
-void courseMenu();
-void schoolMenu();
+            }
+            headCourse=headCourse->next;
+        }
+}
+        
+
+
+
+
+void CoursePassedAvgGrade(School*headSchool){
+if (headSchool->courses==NULL){
+        printf("\n\nEscuela sin CURSOS...\n\n");
+        return;
+    }
+        int avgGrade=0;
+        printf("\n\n=== CURSOS CON PROMEDIO DE APROBADOS ===\n");
+        Course*headCourse=headSchool->courses;
+        while (headCourse!=NULL)
+        {
+            avgGrade=averageGrade(headCourse->students);
+            if (avgGrade>=10){
+                courseDetails(headCourse);
+
+            }
+            headCourse=headCourse->next;
+        }
+}
+
+
+void highestCourseAverage(School*headSchool,Course*headCourse){
+    if (headCourse==NULL){
+        printf("\n\nNo hay Cursos Disponibles...\n\n");
+        return;
+    }
+
+    int highestGrade=0;
+    Course*highestCourseGrade=NULL;
+    int avgGrade=0;
+    while (headCourse!=NULL)
+    {   
+        avgGrade=averageGrade(headCourse->students);
+        if (avgGrade>highestGrade){
+            highestGrade=avgGrade;
+            highestCourseGrade=headCourse;
+        }
+        headCourse=headCourse->next;
+
+    }
+    printf("\n\n=== CURSO CON EL PROMEDIO MAS ALTO: %s , PROMEDIO: %d ===\n",highestCourseGrade->name,highestGrade);
+    courseDetails(highestCourseGrade);
+    
+
+
+
+}
+
+void studentsWhopassed(Course*headCourse,Student*headStudent){
+    if (headStudent==NULL){
+        printf("\n\nNO HAY ALUMNOS EN ESTE CURSO....\n");
+        return;
+    }
+    int i=0;
+    printf("\n\n=== ALUMNOS APROBADOS : %s ===\n",headCourse->name);
+    while (headStudent!=NULL)
+    {
+        if (headStudent->record>=10){
+            printf("\n%d)Name : %s  --- Record : %d --- ID : %d \n",i+1,headStudent->name,headStudent->record,headStudent->id);
+            i++;
+
+        }
+        headStudent=headStudent->next;
+    }
+        
+
+
+
+}
+void studentsWhofailed(Course*headCourse,Student*headStudent){
+    if (headStudent==NULL){
+        printf("\n\nNO HAY ALUMNOS EN ESTE CURSO....\n");
+        return;
+    }
+    int i=0;
+    printf("\n\n=== ALUMNOS REROBADOS: %s ===\n",headCourse->name);
+    while (headStudent!=NULL)
+    {
+        if (headStudent->record<10){
+            printf("\n%d)Name : %s  --- Record : %d --- ID : %d \n",i+1,headStudent->name,headStudent->record,headStudent->id);
+            i++;
+
+        }
+        headStudent=headStudent->next;
+    }
+        
+
+
+}
+
+
+
+
+
+void courseMenu(School*rootSchool,Course*head){
+    printf("\n\n=== BIENVENIDO AL CURSO : %s ===\n",head->name);
+    Student*headStudent=NULL;
+    int condicion=1;
+    int option;
+    while (condicion==1)
+    {
+        printf("\n=========   OPTIONS ========\n");
+        printf("\n1)Create Student\n2)Course Details\n3)Students who Passed\n4)Students who Failed\n5)BACK\n6)Exit\n\nSelect Option: ");
+        scanf("%d",&option);
+        getchar();
+
+        switch (option)
+        {   
+            case 1: headStudent=addNewStudent(headStudent);break;
+            case 2: courseDetails(head);break;
+            case 3: studentsWhopassed(head,headStudent);break;
+            case 4: studentsWhofailed(head,headStudent);break;
+            case 5: return; break;
+            case 6: condicion=0;freeSchools(rootSchool);break;
+            
+            default:printf("\n\nInvalid Option.. Please Enter a valid number..\n\n") ;break;
+        }
+
+    }
+
+
+
+}
+
+void selectCourse(School*rootSchool,School*headSchool,Course*headCourse){
+
+    if (headCourse==NULL){
+        printf("\n\nNo hay Cursos disponibles en esta escuela \n\n");
+        return;
+    }
+
+    Course*aux=headCourse;
+    int i=0;
+
+    while (aux!=NULL)
+    {
+        printf("\n%d) Name: %s   ---   NRC: %d\n",i+1,aux->name,aux->nrc);
+        i++;
+        aux=aux->next;
+
+
+    }
+    aux=headCourse;
+    int nrc;
+    printf("\n\nEnter NRC: ");
+    scanf("%d",&nrc);
+    getchar();
+
+    while (aux!=NULL)
+    {
+        if (aux->nrc==nrc){
+            courseMenu(rootSchool,aux);
+            // schoolMenu(rootSchool,headSchool); // al momento de  terminar al función del menú del curso nos enviará al menú anterior.
+            return;
+        }
+        aux=aux->next;
+    }
+    printf("\n\nCourse Not Found...\n\n");
+}
+
+
+// We use rootSchool to be able to free the whole system
+void schoolMenu(School*rootSchool,School*head){
+    printf("\n\n=== BIENVENIDO A LA INSTITUCIÓN: %s ===\n",head->name);
+    Course*headCourse=NULL;
+    int condicion=1;
+    int option;
+    while (condicion==1)
+    {   
+        printf("\n=========   OPTIONS ========\n");
+        printf("\n1)Create Course\n2)Select Course\n3)Print Out Student all Courses\n4)Courses with a passed Average Grade\n5)Courses with a failed Average Grade\n6)Print the course with the highest Average Grade\n7)Back\n8)Exit\n\nSelect Option: ");
+        scanf("%d",&option);
+        getchar();
+        switch (option)
+        {   
+            case 1: headCourse=addNewCourse(headCourse);break;
+            case 2: selectCourse(rootSchool,head,headCourse);break;
+            case 3: printOutStudentAllCourses(head,headCourse);
+            case 4: CoursePassedAvgGrade(head);break; 
+            case 5: CourseFailedAvgGrade(head);break;
+            case 6: highestCourseAverage(head,headCourse);break;
+            case 7: return;break; // CUANDO RETORNAMOS ESTAMOS CERRANDO ESTA FUNCIÓN Y NOS ESTAMOS DEVOLVIENDO A LA ANTERIOR QUE ESTÁ PENDIENTE.
+            case 8: condicion=0;freeSchools(rootSchool);break;
+            
+            default:printf("\n\nInvalid Option.. Please Enter a valid number..\n\n") ;break;
+        }
+        
+    
+
+    }
+     
+
+}
+
+ 
+
+void selectSchool(School*headSchool){
+    if (headSchool==NULL){
+        printf("\n\nNO HAY ESCUELAS DISPONIBLES....\n\n");
+        return;
+    }
+
+    // print list of schools
+    School*aux=headSchool;
+    int i=0;
+    printf("\n\n=== LIST OF SCHOOLS ===\n");
+    while (aux!=NULL)
+    {   printf("\n%d) Name: %s   ---   RIF: %d\n",i+1,aux->name,aux->rif);
+        i++;
+        aux=aux->next;
+    }
+
+    aux=headSchool;
+    int rif;
+    printf("\nEnter rif of the school : ");
+    scanf("%d",&rif);
+    getchar();
+
+    while (aux!=NULL)
+    {
+        if (aux->rif==rif){
+            schoolMenu(headSchool,aux);
+            return; // CUANDO RETORNAMOS ESTAMOS CERRANDO ESTA FUNCIÓN Y NOS ESTAMOS DEVOLVIENDO A LA ANTERIOR QUE ESTÁ PENDIENTE.
+        }
+        aux=aux->next;
+
+    }
+    
+    printf("\n\nSCHOOL NOT FOUND.... \n\n");
+}
+
+
+
+void mainMenu(){
+    printf("\n\n=== BIENVENIDO AL CENTRO DE EDUCACION NACIONAL ===\n");
+
+    School*head=NULL;
+    int condicion=1;
+    int option;
+    while (condicion==1)
+    {   printf("\n=========   OPTIONS ========\n");
+        printf("\n1)Create School\n2)Select School\n3)Exit\n\nSelect Option: ");
+        scanf("%d",&option);
+        getchar();
+
+        switch (option)
+        {
+
+            case 1: head=addNewSchool(head);break;
+            case 2: selectSchool(head);break;
+            case 3: condicion=0;freeSchools(head);break;
+            
+            default:printf("\n\nInvalid Option.. Please Enter a valid number..\n\n") ;break;
+        }
+    }
+
+        
+        
+    
+    
+
+
+
+
+
+}
+
+
+
+
+
+
+/*LA MAGIA QUE ME VA A PERMITIR IR Y VENIR ENTRE LOS DISTINTOS MENÚS ES QUE AL MOMENTO DE PASAR AL SIGUIETNE MENÚ
+NO DEBO DE CORTAR LA FUNCIÓN ACTUAL, LO QUE ME PERMITIRÁ VOLVER LUEGO RETORNANDO LA FUNCIÓN A LA QUE ACCEDÍ POSTERIORMENTE.
+
+
+ES COMO QUE CUANDO VOY DEL MENÚ 1 ---> MENÚ 2, EL MENÚ 1 SE QUEDA COMO EN ESPERA Y LUEGO SI RETORNO (CIERRO LA FUNCIÓN) 2
+ME ESTÁ DEVOLVIENDO A LA FUNCIÓN 1.*/
+
+
+
