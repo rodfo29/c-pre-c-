@@ -63,6 +63,7 @@ int*insert2(int*array,int*size,int newElement,int position){
     int*newArray=(int*)malloc(sizeof(int)*(*(size)));
     
     if (position>=*(size)){
+    // si le bajamos 1 sería como la longitud del arreglo original, luego el espacio faltante ( el final es donde insertaremos el nuevo elemento).
         for (int i = 0; i <*(size)-1; i++)
         {
             newArray[i]=array[i];
@@ -73,6 +74,7 @@ int*insert2(int*array,int*size,int newElement,int position){
     
     else if (position<0){
         newArray[0]=newElement;
+        // Acá no habría problema de acceder a un índice indebido en el arreglo original ya que cuando se llegue a ese elemento final ya el bucle con la variable i se saldrá
         for(int i=1,j=0;i<*(size);i++){
         newArray[i]=array[j];
         j++;
