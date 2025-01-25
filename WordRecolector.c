@@ -17,6 +17,7 @@ int lengthWord(char*str){
 
 
 
+typedef int entero;
 
 
 
@@ -24,37 +25,38 @@ int lengthWord(char*str){
 
 
 
-int main(){
-    int rows;
-    printf("\nEnter number of rows: ");
-    scanf("%d",&rows);
-    getchar();
+
+int main() {
+}
+
+    // int rows;
+    // printf("\nEnter number of rows: ");
+    // scanf("%d",&rows);
+    // getchar();
     
     // Allocate memory for a matrix of strings.
     
-    char**mat=(char**)calloc(rows,sizeof(char*));
-    for (int i = 0; i < rows; i++)
-    {   // All the strings must be allocated  before being stored in the matrix
-        char *word=(char*)calloc(52,sizeof(char));
-        printf("\nEnter Word: ");
-        fgets(word,52,stdin);
-        mat[i]=word;
-    }
+    // char**mat=(char**)calloc(rows,sizeof(char*));
+    // for (int i = 0; i < rows; i++)
+    // {   // All the strings must be allocated  before being stored in the matrix
+    //     char *word=(char*)calloc(52,sizeof(char));
+    //     printf("\nEnter Word: ");
+    //     fgets(word,52,stdin);
+    //     mat[i]=word;
+    // }
 
-    for (int i = 0; i < rows; i++)
-    {
-        printf("%s",mat[i]);
-    }
+    // for (int i = 0; i < rows; i++)
+    // {
+    //     printf("%s",mat[i]);
+    // }
     
 
-    for (int i=0;i<rows;i++){
+    // for (int i=0;i<rows;i++){
         
         
-        printf("\n\nLiberando palabra: %s , addres: %p",mat[i],mat[i]);
-        free(mat[i]);
-    }
-    free(mat);
+    //     printf("\n\nLiberando palabra: %s , addres: %p",mat[i],mat[i]);
+    //     free(mat[i]);
+    // }
+    // free(mat);
     
 
-
-}

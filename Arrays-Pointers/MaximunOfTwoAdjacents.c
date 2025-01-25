@@ -2,7 +2,8 @@
 
 int MaxSum(int*array,int size){
     if (size<=0){
-    return 0;}
+    return 0;
+    }
     if (size==1){
     return *(array);}
 

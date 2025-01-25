@@ -57,6 +57,7 @@ int main(){
     for (char*i=new;*i!='\0';i++){
         printf("%c",*i);
     }
+    free(new);
 
 
 
