@@ -99,6 +99,7 @@ Nodo* leerLista(const char *nombreArchivo) {
 int main() {
     Nodo *lista = NULL;
 
+    
     // Agregar algunos nodos a la lista
     lista = agregarNodo(lista, "Producto A", 10.5);
     lista = agregarNodo(lista, "Producto B", 20.0);
