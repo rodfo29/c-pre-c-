@@ -65,6 +65,8 @@ Nodo* leerLista(const char *nombreArchivo) {
 
     // Leer nodo por nodo del archivo
     Nodo temp; // Nodo temporal para leer
+    // Cada vez que fread lee un bloque de datos (en este caso, de tamaño sizeof(Nodo)), el puntero interno del archivo 
+    // se mueve automáticamente al siguiente bloque.
     while (fread(&temp, sizeof(Nodo), 1, archivo)) {
         // Crear un nuevo nodo en memoria
         Nodo *nuevo = (Nodo *)malloc(sizeof(Nodo));
