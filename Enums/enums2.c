@@ -1,15 +1,15 @@
 #include <stdio.h>
 
-enum estado_civil {
+typedef enum estado_civil {
     SOLTERO,
     CASADO,
     DIVORCIADO,
     VIUDO
-};
+}estado_civil;
 
 struct persona {
     char nombre[50];
-    enum estado_civil estado;  // Usamos enum aquí
+    estado_civil estado;  // Usamos enum aquí
 };
 
 int main() {
