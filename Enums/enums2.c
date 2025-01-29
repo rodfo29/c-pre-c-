@@ -14,6 +14,9 @@ struct persona {
 
 int main() {
     struct persona p1 = {"Juan", CASADO};
+    if (p1.estado==CASADO){
+        printf("Mano si es casado \n");
+    }
 
     printf("Nombre: %s\n", p1.nombre);
     printf("Estado civil: %d\n", p1.estado);
