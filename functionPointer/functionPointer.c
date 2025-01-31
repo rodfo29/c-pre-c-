@@ -18,7 +18,7 @@ void operation(int(*function)(int,int),int a,int b){
 
 int main(){
     // De este manera declaramos el puntero a la función, tipoDeDato(*nombreFunción)(tipoDeDato Parámetro1, tipoDeDato Parámetro2).
-    int(*ptrFunctionSum)(int a, int b);
+    int(*ptrFunctionSum)(int, int);
     ptrFunctionSum=&sum;
     int s=(*ptrFunctionSum)(1,2);
     printf("El resultado es: %d \n",s);
