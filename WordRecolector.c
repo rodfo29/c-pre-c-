@@ -27,6 +27,8 @@ typedef int entero;
 
 
 int main() {
+    int a=4;
+    printf("%lu\n",sizeof(a));
 }
 
     // int rows;

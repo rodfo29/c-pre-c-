@@ -17,8 +17,6 @@ enum mes {
 
 int main() {
     enum mes mes_actual = MAYO;
-
-    printf("El mes actual es el número %d.\n", mes_actual);
-
+    
     return 0;
 }

@@ -13,7 +13,7 @@ struct persona {
 };
 
 int main() {
-    struct persona p1 = {"Juan", CASADO};
+    struct persona p1 = {"Juan", 1};
     if (p1.estado==CASADO){
         printf("Mano si es casado \n");
     }

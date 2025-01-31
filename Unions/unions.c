@@ -49,6 +49,7 @@ void ImprimirTipoDESalario(PERSONA*persona){
 
 }
 
+
 int main(){
     PERSONA persona1={CASADO,20};
     ImprimirTipoDESalario(&persona1);
