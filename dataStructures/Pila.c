@@ -56,6 +56,7 @@ void freeStack(Pila*stack){
         return;
     }
 
+
     Nodo*aux;
     while(stack->top!=NULL)
     {
@@ -97,7 +98,7 @@ int main(){
     push(&stack,1);
     printStack(&stack);
 
-
+    
     (emptyStack(&stack))?printf("Tope: %d\n",top(&stack)):printf("Pila vacía....");
     (emptyStack(&stack))?printf("Tope: %d\n",pop(&stack)):printf("Pila vacía....");
     (emptyStack(&stack))?printf("Tope: %d\n",pop(&stack)):printf("Pila vacía....");

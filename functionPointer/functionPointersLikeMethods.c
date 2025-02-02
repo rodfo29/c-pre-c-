@@ -30,8 +30,9 @@ int main(){
     persona1.edad=18;
     persona1.sueldo=2500;
     persona1.informacionPersona=infoPersonal;
-    
+
 
     persona1.informacionPersona(persona1.nombre,persona1.edad,persona1.sueldo);
-
+    printf("%ld",sizeof(persona1));
+    
 }
