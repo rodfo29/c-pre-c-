@@ -1,11 +1,12 @@
 import string
 import random
+import os 
 
 # Esta es la representación de estas secuencias de caracteres.
 numbers=string.digits #'123456789'
 characters=string.ascii_lowercase # 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
 mayusculas=string.ascii_uppercase # 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
-
+caracteresEspeciales=string.punctuation
 
 #De esta manera podemos obtenes una contraseña que es producto de concatenar distintas secuencias
 # de caracteres.
