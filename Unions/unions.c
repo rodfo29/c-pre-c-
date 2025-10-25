@@ -15,6 +15,20 @@ typedef enum ESTADO_CIVIL{
 // A diferencia de los structs, los unions solo puedes definir únicamente 1 solo miembro, en cambio los structs, pueden definir todos sus miembros.
 // Nos puedes servir en casos en los cuales necesitemos solo definir 1 miembro. Los podemos usar anidados en structs
 
+/* al final lo que estamos haciendo es a un mismo espacio de memoria ( eso es lo que pasa con los union, que puede tener distintos miembros pero al final siempre usarán el mismo espacio de memoria para almacenar el dato) podemos diferenciar a qué miembro
+pertenece dicho valor. 
+en el ejemplo del hombre dependiendo del estado civil su sueldo es por hora o por contrato normal, por eos es que hacemos la distintición de los 2 tipos de salario. Al final de todo se ocupará el mismo espacio de memoria para guarddar el salario normal
+    o el salario por hora.
+
+
+    Entonces la lógica es:
+
+- Usas union para ahorrar memoria y reutilizar el espacio.
+
+- Cambias el “significado” del contenido dependiendo del miembro al que asignas.
+
+- Es útil para diferenciar estados, tipos de datos, o interpretaciones.
+    */
 typedef struct PERSONA
 {
     ESTADO_CIVIL estadoCivil;
